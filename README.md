@@ -21,20 +21,20 @@ This project follows modern web development practices, including RESTful API des
 
 ### Stack
 
-| **Category**                  | **Technology**                                      |
-| ----------------------------- | --------------------------------------------------- |
-| **Backend**                   | Node.js, Express.js                                 |
-| **Database**                  | MongoDB (Atlas)                                     |
-| **Frontend (Planned)**        | React.js, Tailwind CSS                              |
-| **API Integration**           | NewsAPI, NY Times API                               |
-| **Authentication (Optional)** | JWT, bcrypt.js                                      |
-| **Deployment**                | Render/Railway (Backend), Vercel/Netlify (Frontend) |
+| **Category**        | **Technology**                                      |
+| ------------------- | --------------------------------------------------- |
+| **Backend**         | Node.js, Express.js                                 |
+| **Database**        | MongoDB (Atlas)                                     |
+| **Frontend**        | React.js, Tailwind CSS                              |
+| **API Integration** | NewsAPI, NY Times API                               |
+| **Authentication**  | JWT, bcrypt.js                                      |
+| **Deployment**      | Render/Railway (Backend), Vercel/Netlify (Frontend) |
 
 ## 📌 Installation & Setup
 
 Clone the Repository
 
-git clone https://github.com/SreekuttanCS/Realtime-News-Aggregator.git
+git clone https://github.com/Ansilaju/Realtime-News-Aggregator.git
 cd realtime-news-aggregator
 
 Install Dependencies
