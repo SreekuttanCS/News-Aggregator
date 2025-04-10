@@ -34,7 +34,7 @@ This project follows modern web development practices, including RESTful API des
 
 Clone the Repository
 
-git clone https://github.com/Ansilaju/Realtime-News-Aggregator.git
+git clone https://github.com/SreekuttanCS/Realtime-News-Aggregator.git
 cd realtime-news-aggregator
 
 Install Dependencies
