@@ -3,11 +3,11 @@ import User from "../model/User.js";
 
 const protect = async (req, res, next) => {
   if (
-    req.header.authorization &&
-    req.header.authorization.startsWith("Bearer")
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
   ) {
     try {
-      const token = req.header.authorization.split(" ")[1];
+      const token = req.headers.authorization.split(" ")[1];
 
       const decode = jwt.verify(token, process.env.SECRET_KEY);
 
