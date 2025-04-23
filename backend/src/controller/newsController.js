@@ -1,18 +1,27 @@
 import axios from "axios";
 import UserNews from "../model/UserNews.js";
+import RSSParser from "rss-parser";
 
+const parser = new RSSParser();
 export const getFetchedNews = async (req, res) => {
   try {
-    const response = await axios.get(
-      `https://newsdata.io/api/1/latest?apikey=${process.env.NEWS_KEY}&country=in&language=en`
-    );
-    res.status(200).json(response.data);
+    const rssUrl = "https://news.google.com/rss?hl=en-IN&gl=IN&ceid=IN:en";
+
+    const feed = await parser.parseURL(rssUrl);
+
+    const articles = feed.items.map((item) => ({
+      title: item.title,
+      link: item.link,
+      pubDate: item.pubDate,
+      description: item.contentSnippet || "",
+    }));
+
+    res.status(200).json(articles);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res.status(500).json({ message: "Failed to fetch news", err });
   }
 };
-
 export const createNews = async (req, res) => {
   const { title, content, category } = req.body;
   try {
@@ -84,8 +93,6 @@ export const deleteNews = async (req, res) => {
   try {
     const news = await UserNews.findById(req.params.id);
     if (!news) return res.status(400).json({ message: "Not Found" });
-
-
 
     if (news.author._id.toString() !== req.user._id.toString()) {
       return res.status(400).json({ message: "Unauthorized author" });

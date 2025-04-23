@@ -1,0 +1,16 @@
+.navbar {
+  font-family: "Inter Tight", sans-serif;
+  padding: 1rem;
+  
+}
+.nav-logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.nav-input {
+  background: #cccccc;
+  border-radius: 17px;
+}
+.nav-seach-icon{
+  font-size: 1rem !important;
+}
