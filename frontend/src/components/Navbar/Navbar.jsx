@@ -6,7 +6,7 @@ import Account from "./Account";
 
 const Navbar = () => {
   return (
-    <div className="navbar flex justify-around bg-amber-200 ">
+    <div className="navbar flex justify-around">
       <Logo />
       <InputBox />
       <Account />

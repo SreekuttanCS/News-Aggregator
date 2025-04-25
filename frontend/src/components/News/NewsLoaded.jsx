@@ -18,7 +18,7 @@ const NewsLoaded = () => {
         const userFetchedResponse = await axios.get(
           "http://localhost:5000/api/news/fetchnews"
         );
-console.log(userFetchedResponse.data.news);
+        console.log(userFetchedResponse.data.news);
 
         const allNews = [
           ...userFetchedResponse.data.news,
@@ -33,7 +33,7 @@ console.log(userFetchedResponse.data.news);
     };
 
     fetchNews();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>

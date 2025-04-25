@@ -1,0 +1,13 @@
+.login-heading {
+  font-size: 2rem;
+  font-weight: bolder;
+}
+.login-section {
+  padding: 2rem;
+}
+.login-input {
+  border-radius: 20px;
+  border: 2px solid #fbfbfb;
+  margin-block: 10px;
+  padding: 8px;
+}

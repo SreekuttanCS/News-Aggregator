@@ -4,8 +4,8 @@ import cors from "cors";
 import connectDB from "./src/config/db.js";
 import userRouter from "./src/router/userRouter.js";
 import newsRouter from "./src/router/newsRouter.js";
-dotenv.config();
 
+dotenv.config();
 connectDB();
 
 const app = express();
