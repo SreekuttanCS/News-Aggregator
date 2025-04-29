@@ -3,41 +3,42 @@ import { useDispatch, useSelector } from "react-redux";
 import { newsError, newsLoaded, newsLoading } from "../../redux/NewsSlice";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import "./news.css";
+import "../News/news.css";
 
-const NewsLoaded = () => {
+const CategoryNews = () => {
   const dispatch = useDispatch();
   const { news } = useSelector((state) => state.news);
   const { isLogged } = useSelector((state) => state.logged);
+  const { category } = useSelector((state) => state.category);
 
   useEffect(() => {
     const fetchNews = async () => {
       console.log("log: " + isLogged);
-
       dispatch(newsLoading());
+
       try {
         const fetchedResponse = await axios.get(
-          "http://localhost:5000/api/news/fetchednews"
+          `http://localhost:5000/api/news/category/${category}`
         );
         const userFetchedResponse = await axios.get(
-          "http://localhost:5000/api/news/fetchnews"
+          `http://localhost:5000/api/news/category_user/${category}`
         );
-        console.log(userFetchedResponse.data.news);
+        console.log(fetchedResponse);
 
         const allNews = [
-          ...userFetchedResponse.data.news,
+          ...userFetchedResponse.data,
           ...fetchedResponse.data.articles,
         ];
 
         dispatch(newsLoaded(allNews));
       } catch (err) {
+        console.log(err);
         dispatch(newsError("Failed to load news", err));
       }
     };
 
     fetchNews();
-  }, [dispatch]);
-
+  }, [dispatch, category]);
   return (
     <div>
       {news ? (
@@ -58,4 +59,4 @@ const NewsLoaded = () => {
   );
 };
 
-export default NewsLoaded;
+export default CategoryNews;

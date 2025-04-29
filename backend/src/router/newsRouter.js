@@ -2,6 +2,8 @@ import express from "express";
 import {
   createNews,
   deleteNews,
+  getCategoryFetch,
+  getCategoryFetched,
   getFetchedNews,
   getSingleNews,
   getUserNews,
@@ -18,5 +20,7 @@ router.get("/fetchnews", getUserNews);
 router.get("/:id", getSingleNews);
 router.put("/:id", protect, updateNews);
 router.delete("/:id", protect, deleteNews);
+router.get("/category/:category", getCategoryFetched);
+router.get("/category_user/:category", getCategoryFetch);
 
 export default router;

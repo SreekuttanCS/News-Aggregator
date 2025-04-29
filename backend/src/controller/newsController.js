@@ -8,23 +8,29 @@ const parser = new RSSParser();
 
 export const getFetchedNews = async (req, res) => {
   try {
-    const rssUrl = "https://news.google.com/rss?hl=en-IN&gl=IN&ceid=IN:en";
-    const feed = await parser.parseURL(rssUrl);
+    const response = await axios.get(
+      `https://newsapi.org/v2/top-headlines?country=us&apiKey=${process.env.NEWS_KEY}`
+    );
 
-    const articles = feed.items.map((item) => ({
-      title: item.title,
-      link: item.link,
-      pubDate: item.pubDate,
-      description: item.contentSnippet || "",
-    }));
-
-    res.status(200).json(articles);
+    res.status(200).json(response.data);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Failed to fetch news", err });
   }
 };
+export const getCategoryFetched = async (req, res) => {
+  const { category } = req.params;
+  try {
+    const response = await axios.get(
+      `https://newsapi.org/v2/top-headlines?country=us&apiKey=${process.env.NEWS_KEY}&category=${category}`
+    );
 
+    res.status(200).json(response.data);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to fetch news", err });
+  }
+};
 export const createNews = async (req, res) => {
   const { title, content, category } = req.body;
   try {
@@ -45,7 +51,6 @@ export const createNews = async (req, res) => {
     res.status(400).json({ message: "Failed to create news", err });
   }
 };
-
 export const getUserNews = async (req, res) => {
   try {
     const news = await UserNews.find();
@@ -74,7 +79,21 @@ export const getSingleNews = async (req, res) => {
     res.status(500).json({ message: "Failed to fetch news", err });
   }
 };
+export const getCategoryFetch = async (req, res) => {
+  const { category } = req.params;
+  console.log("Requested category:", category);
 
+  try {
+    const news = await UserNews.find({ category: category }).sort({
+      createdAt: -1,
+    });
+
+    res.status(200).json(news);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Failed to fetch news" });
+  }
+};
 export const updateNews = async (req, res) => {
   try {
     const news = await UserNews.findById(req.params.id).populate(

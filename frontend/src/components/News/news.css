@@ -4,6 +4,15 @@
   border-radius: 17px;
 }
 
-.aa{
-margin-block:2rem ;
+.aa {
+  margin-block: 2rem;
+}
+.news-heading-load {
+  font-weight: bold;
+  font-size: 18px;
+}
+.news-desc-load {
+  font-weight: 300;
+  font-size: 15px;
+  color: #8e918f;
 }
