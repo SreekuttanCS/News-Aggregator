@@ -1,10 +1,6 @@
 import axios from "axios";
 import UserNews from "../model/UserNews.js";
 import RSSParser from "rss-parser";
-import upload from "../middleware/multer.js";
-import cloudinary from "cloudinary";
-
-const parser = new RSSParser();
 
 export const getFetchedNews = async (req, res) => {
   try {
@@ -63,22 +59,22 @@ export const getUserNews = async (req, res) => {
   }
 };
 
-export const getSingleNews = async (req, res) => {
-  try {
-    const news = await UserNews.findById(req.params.id).populate(
-      "author",
-      "name"
-    );
-    if (!news) {
-      return res.status(400).json({ message: "News not found" });
-    } else {
-      return res.status(200).json({ news });
-    }
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: "Failed to fetch news", err });
-  }
-};
+// export const getSingleNews = async (req, res) => {
+//   try {
+//     const news = await UserNews.findById(req.params.id).populate(
+//       "author",
+//       "name"
+//     );
+//     if (!news) {
+//       return res.status(400).json({ message: "News not found" });
+//     } else {
+//       return res.status(200).json({ news });
+//     }
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json({ message: "Failed to fetch news", err });
+//   }
+// };
 export const getCategoryFetch = async (req, res) => {
   const { category } = req.params;
   console.log("Requested category:", category);
@@ -141,5 +137,42 @@ export const deleteNews = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Failed to delete news", err });
+  }
+};
+export const apiSearch = async (req, res) => {
+  const searchTerm = req.query.q;
+  console.log("Seartch term " + searchTerm);
+
+  try {
+    if (!searchTerm || searchTerm.trim() == " ") {
+      return res.status(400).json({ message: "Search query is required" });
+    }
+    const result = await axios.get(
+      `https://newsapi.org/v2/everything?q=${searchTerm}&sortBy=publishedAt&apiKey=${process.env.NEWS_KEY}`
+    );
+    res.status(200).json(result.data);
+    console.log("sucess search");
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to search news", err });
+  }
+};
+export const userSearch = async (req, res) => {
+  const searchTerm = req.query.q;
+  try {
+    if (!searchTerm || searchTerm.trim() == "") {
+      return res.status(400).json({ message: "Search querey is required" });
+    }
+    const result = await UserNews.find({
+      $or: [
+        { title: { $regex: searchTerm, $options: "i" } },
+        { content: { $regex: searchTerm, $options: "i" } },
+        { category: { $regex: searchTerm, $options: "i" } },
+      ],
+    }).sort({ createdAt: -1 });
+    res.status(200).json(result);
+  } catch (err) {
+    console.error("Search error:", err);
+    res.status(500).json({ message: "Failed to search news", err });
   }
 };

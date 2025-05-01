@@ -7,7 +7,6 @@ import NewsDetail from "./components/News/NewsDetail";
 import CreateNews from "./components/News Creation/CreateNews";
 
 const Home = () => {
-
   return (
     <>
       <Navbar />

@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import { Menu, MenuItem } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./navbar.css";
+import { logout } from "../../redux/LoggedSlice.js";
+
 const Account = ({ fontSize = "large", ariaLabel = "Manage Account" }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { isLogged } = useSelector((state) => state.logged);
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -18,14 +21,14 @@ const Account = ({ fontSize = "large", ariaLabel = "Manage Account" }) => {
   };
   const handleAuth = () => {
     if (isLogged) {
-      navigate("/");
-      console.log("Already login");
+      dispatch(logout());
+      localStorage.removeItem("token");
     } else {
       navigate("/login");
     }
   };
   const handleCreatePage = () => {
-    navigate("/news/create");
+    navigate("/create");
   };
 
   return (

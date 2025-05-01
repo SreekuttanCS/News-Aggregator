@@ -15,6 +15,7 @@ const LoginSection = () => {
   const [enteredPassword, setEnteredPassword] = useState("");
   // const { isLogged } = useSelector((state) => state.logged);
   const dispatch = useDispatch();
+  
   const handleLogin = async (e) => {
     e.preventDefault();
     if (enteredEmail !== "" && enteredPassword !== "") {

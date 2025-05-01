@@ -2,26 +2,32 @@ import jwt from "jsonwebtoken";
 import User from "../model/User.js";
 
 const protect = async (req, res, next) => {
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
-  ) {
+  const authHeader = req.headers.authorization;
+
+  if (authHeader && authHeader.startsWith("Bearer ")) {
+    const token = authHeader.split(" ")[1];
+
+    if (!token || token === "null" || token.length < 10) {
+      return res.status(401).json({ message: "Invalid or missing token" });
+    }
+
     try {
-      const token = req.headers.authorization.split(" ")[1];
+      const decoded = jwt.verify(token, process.env.SECRET_KEY);
+      const user = await User.findById(decoded.id).select("-password");
 
-      const decode = jwt.verify(token, process.env.SECRET_KEY);
-
-      req.user = await User.findById(decode.id).select("-password");
-      if (!req.user) {
-        return res.status(401).json({ error: "Invalid token" });
+      if (!user) {
+        return res.status(401).json({ error: "User not found, token invalid" });
       }
+
+      req.user = user;
       next();
     } catch (err) {
-      console.error(err);
-      res.status(404).json({ message: "Not authorized,token fail" });
+      console.error("Token error:", err.message);
+      res.status(401).json({ message: "Token verification failed" });
     }
   } else {
-    res.status(404).json({ message: "No token, authorized fail" });
+    res.status(401).json({ message: "No token provided" });
   }
 };
+
 export default protect;

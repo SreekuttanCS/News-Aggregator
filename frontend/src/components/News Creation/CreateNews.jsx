@@ -1,10 +1,11 @@
 import React from "react";
+import Creation from "./Creation";
 
 const CreateNews = () => {
   return (
-    <>
-      <h2>Create News</h2>
-    </>
+    <div className="container">
+      <Creation />
+    </div>
   );
 };
 
