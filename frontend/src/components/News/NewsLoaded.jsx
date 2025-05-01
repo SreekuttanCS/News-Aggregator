@@ -45,8 +45,12 @@ const NewsLoaded = () => {
               <h3 className="news-heading-load">{item.title}</h3>
             </Link>
             <p className="news-desc-load">{item.content}</p>
-            <p className="news-desc-load">{item.description}</p>
-            <p className="news-date-load">{item.publishedAt}</p>
+            <p className="news-desc-load truncate ">{item.description}</p>
+            <p className="news-date-load">
+              {item.publishedAt
+                ? new Date(item.publishedAt).toLocaleString()
+                : new Date(item.createdAt).toLocaleString()}
+            </p>
           </div>
         ))
       ) : (

@@ -1,7 +1,12 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { isPost } from "../../redux/LoggedSlice";
+import { useNavigate } from "react-router-dom";
 
 const Creation = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: "",
     content: "",
@@ -40,12 +45,18 @@ const Creation = () => {
     }
     //if no token notify login
   };
+  
+  const handleBackPost = () => {
+    dispatch(isPost(false));
+    navigate("/");
+  };
+
   return (
     <div className="flex flex-col justify-center items-center ">
       <h2 className="text-2xl font-bold mb-4">Create News</h2>
       <form
-        onSubmit={handleSubmit}
         className="flex flex-col gap-4 w-full max-w-md"
+        onSubmit={handleSubmit}
       >
         <input
           type="text"
@@ -76,12 +87,20 @@ const Creation = () => {
           onChange={handleChange}
           className="file:border file:border-gray-300 file:rounded file:px-3 file:py-2"
         />
-        <button
-          type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-        >
-          Submit
-        </button>
+        <div className="w-full flex justify-around">
+          <button
+            type="submit"
+            className="bg-blue-600 text-white w-50 rounded hover:bg-blue-700"
+          >
+            Submit
+          </button>
+          <button
+            onClick={handleBackPost}
+            className="bg-red-600 text-white w-50 rounded hover:bg-blue-700"
+          >
+            Back
+          </button>
+        </div>
       </form>
     </div>
   );

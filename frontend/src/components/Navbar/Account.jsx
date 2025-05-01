@@ -4,7 +4,7 @@ import { Menu, MenuItem } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./navbar.css";
-import { logout } from "../../redux/LoggedSlice.js";
+import { isPost, logout } from "../../redux/LoggedSlice.js";
 
 const Account = ({ fontSize = "large", ariaLabel = "Manage Account" }) => {
   const navigate = useNavigate();
@@ -28,6 +28,7 @@ const Account = ({ fontSize = "large", ariaLabel = "Manage Account" }) => {
     }
   };
   const handleCreatePage = () => {
+    dispatch(isPost(true));
     navigate("/create");
   };
 

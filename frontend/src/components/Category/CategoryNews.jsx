@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { newsError, newsLoaded, newsLoading } from "../../redux/NewsSlice";
 import axios from "axios";
@@ -13,7 +13,6 @@ const CategoryNews = () => {
 
   useEffect(() => {
     const fetchNews = async () => {
-      console.log("log: " + isLogged);
       dispatch(newsLoading());
 
       try {
@@ -23,13 +22,18 @@ const CategoryNews = () => {
         const userFetchedResponse = await axios.get(
           `http://localhost:5000/api/news/category_user/${category}`
         );
-        console.log(fetchedResponse);
 
-        const allNews = [
-          ...userFetchedResponse.data,
-          ...fetchedResponse.data.articles,
-        ];
+        const userNews = Array.isArray(userFetchedResponse.data)
+          ? userFetchedResponse.data
+          : Array.isArray(userFetchedResponse.data.articles)
+          ? userFetchedResponse.data.articles
+          : [];
 
+        const apiNews = Array.isArray(fetchedResponse.data.articles)
+          ? fetchedResponse.data.articles
+          : [];
+
+        const allNews = [...userNews, ...apiNews];
         dispatch(newsLoaded(allNews));
       } catch (err) {
         console.log(err);
@@ -38,7 +42,7 @@ const CategoryNews = () => {
     };
 
     fetchNews();
-  }, [dispatch, category]);
+  }, [category]);
   return (
     <div>
       {news ? (

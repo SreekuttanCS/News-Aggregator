@@ -1,11 +1,17 @@
 import React from "react";
 import Creation from "./Creation";
+import Navbar from "../Navbar/Navbar";
+import Category from "../Category/Category";
 
 const CreateNews = () => {
   return (
-    <div className="container">
-      <Creation />
-    </div>
+    <>
+      <Navbar />
+      <Category />
+      <div className="container ">
+        <Creation />
+      </div>
+    </>
   );
 };
 
