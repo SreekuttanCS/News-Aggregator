@@ -6,12 +6,15 @@ import Account from "./Account";
 
 const Navbar = () => {
   return (
-    <div className="navbar flex justify-around">
-      <Logo />
-      <InputBox />
-      <Account />
+    <header className=" shadow-md p-5 sticky top-0 z-50">
+      <div className="container mx-auto flex items-center justify-between">
+        <Logo />
+        <InputBox />
+        <Account />
     </div>
+    </header>
   );
 };
+
 
 export default Navbar;

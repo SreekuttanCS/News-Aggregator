@@ -1,9 +1,9 @@
 import React from "react";
-import "./news.css";
-import NewsLoaded from "./NewsLoaded";
+import "../components/News/news.css";
+import NewsLoaded from "../components/News/NewsLoaded";
 import { useSelector } from "react-redux";
-import CategoryNews from "../Category/CategoryNews";
-import SearchNews from "./SearchNews";
+import CategoryNews from "../components/Category/CategoryNews";
+import SearchNews from "../components/News/SearchNews";
 
 const News = () => {
   const { category } = useSelector((state) => state.category);

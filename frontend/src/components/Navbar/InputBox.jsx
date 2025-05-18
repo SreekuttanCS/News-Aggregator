@@ -1,46 +1,41 @@
 import React, { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
-import "./navbar.css";
 import { useDispatch, useSelector } from "react-redux";
 import { clearSearch, setSearchTerm } from "../../redux/SearchSlice";
+
 const InputBox = () => {
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
   const { isSearch } = useSelector((state) => state.search);
 
   const handleSearch = () => {
-    dispatch(setSearchTerm(search));
+    if (search.trim()) {
+      dispatch(setSearchTerm(search));
+    }
   };
+
   const handleClear = () => {
     dispatch(clearSearch());
     setSearch("");
   };
+
   return (
-    <div className="flex gap-2 w-40 md:w-90">
+    <div className="flex items-center bg-gray-100 px-3 py-2 rounded-lg shadow-sm w-full md:w-96">
       <input
         type="text"
-        className="nav-input w-30 md:w-full text-black"
+        placeholder="Search news..."
+        className="flex-grow bg-transparent outline-none text-black placeholder-gray-500"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
-      {!isSearch ? (
-        <button
-          aria-label="Search"
-          className="nav-search-button"
-          onClick={handleSearch}
-        >
-          <SearchIcon className="nav-search-icon " fontSize="large" />
-        </button>
-      ) : (
-        <button
-          aria-label="Search"
-          className="nav-search-button"
-          onClick={handleClear}
-        >
-          <CloseIcon className="nav-search-icon " fontSize="large" />
-        </button>
-      )}
+      <button onClick={isSearch ? handleClear : handleSearch}>
+        {isSearch ? (
+          <CloseIcon className="text-red-500" />
+        ) : (
+          <SearchIcon className="text-blue-500" />
+        )}
+      </button>
     </div>
   );
 };

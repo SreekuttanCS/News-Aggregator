@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-const userSchema = new mongoose.Schema(
+const adminSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     email: {
@@ -17,15 +17,16 @@ const userSchema = new mongoose.Schema(
       },
     },
     password: { type: String, required: true, minLength: 6 },
-    role: {
-      type: String,
-      default: "user",
+    permissions: {
+      type: [String],
+      default: ["create", "edit", "delete", "manageUsers"],
     },
+    isSuperAdmin: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
 
-userSchema.pre("save", async function (next) {
+adminSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     return next();
   }
@@ -35,23 +36,16 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-userSchema.methods.comparePassword = async function (EnteredPassword) {
-  return await bcrypt.compare(EnteredPassword, this.password);
+adminSchema.methods.comparePassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
 };
 
-userSchema.methods.generateAuthToken = function () {
-  const payload = {
-    id: this._id,
-    role: this.role,
-  };
-
-  const token = jwt.sign(payload, process.env.SECRET_KEY, {
-    expiresIn: "1h",
-  });
-
+adminSchema.methods.generateAuthToken = function () {
+  const payload = { id: this._id, role: "admin" };
+  const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: "1h" });
   return token;
 };
 
-const User = mongoose.model("User", userSchema);
+const Admin = mongoose.model("Admin", adminSchema);
 
-export default User;
+export default Admin;

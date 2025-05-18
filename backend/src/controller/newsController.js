@@ -42,7 +42,6 @@ export const createNews = async (req, res) => {
 
     res.status(200).json({ message: "Successfully created news", news });
   } catch (err) {
-    console.log(err);
     console.error("Cloudinary Upload Error:", err);
     res.status(400).json({ message: "Failed to create news", err });
   }
@@ -59,25 +58,8 @@ export const getUserNews = async (req, res) => {
   }
 };
 
-// export const getSingleNews = async (req, res) => {
-//   try {
-//     const news = await UserNews.findById(req.params.id).populate(
-//       "author",
-//       "name"
-//     );
-//     if (!news) {
-//       return res.status(400).json({ message: "News not found" });
-//     } else {
-//       return res.status(200).json({ news });
-//     }
-//   } catch (err) {
-//     console.log(err);
-//     res.status(500).json({ message: "Failed to fetch news", err });
-//   }
-// };
 export const getCategoryFetch = async (req, res) => {
   const { category } = req.params;
-  console.log("Requested category:", category);
 
   try {
     const news = await UserNews.find({ category: category }).sort({
@@ -86,7 +68,6 @@ export const getCategoryFetch = async (req, res) => {
 
     res.status(200).json(news);
   } catch (err) {
-    console.log(err);
     res.status(500).json({ message: "Failed to fetch news" });
   }
 };
@@ -141,7 +122,6 @@ export const deleteNews = async (req, res) => {
 };
 export const apiSearch = async (req, res) => {
   const searchTerm = req.query.q;
-  console.log("Seartch term " + searchTerm);
 
   try {
     if (!searchTerm || searchTerm.trim() == " ") {
@@ -151,7 +131,6 @@ export const apiSearch = async (req, res) => {
       `https://newsapi.org/v2/everything?q=${searchTerm}&sortBy=publishedAt&apiKey=${process.env.NEWS_KEY}`
     );
     res.status(200).json(result.data);
-    console.log("sucess search");
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Failed to search news", err });

@@ -1,11 +1,13 @@
 import React from "react";
-import Home from "./Home";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Signup from "./components/SignUp/Signup";
-import Login from "./components/Login/login";
 import CategoryNews from "./components/Category/CategoryNews";
-import CreateNews from "./components/News Creation/CreateNews";
 import SearchNews from "./components/News/SearchNews";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import CreateNews from "./pages/CreateNews";
+import IndividualNews from "./components/News/IndividualNews";
+import Admin from "./pages/Admin";
 
 const App = () => {
   return (
@@ -16,7 +18,10 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/create" element={<CreateNews />} />
         <Route path="/category/:category" element={<CategoryNews />} />
-        <Route Path="/search" element={<SearchNews />} />
+        <Route path="/search" element={<SearchNews />} />
+        <Route path="/news/:id" element={<IndividualNews />} />
+        <Route path="/admin" element={<Admin />} />
+       
       </Routes>
     </Router>
   );

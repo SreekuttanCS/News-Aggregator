@@ -1,25 +1,6 @@
 .navbar {
   font-family: "Inter Tight", sans-serif;
-  padding: 1rem;
 }
 .nav-logo {
-  font-size: 2rem;
   font-family: "Montserrat", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 600;
-  font-style: italic;
-}
-.nav-input {
-  background: #cccccc;
-  border-radius: 17px;
-  padding-inline: 10px;
-}
-.nav-seach-icon {
-  font-size: 1rem !important;
-}
-.account-icon {
-  cursor: pointer;
-}
-.account-item {
-  background: 292a2d;
 }

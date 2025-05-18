@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { newsError, newsLoaded, newsLoading } from "../../redux/NewsSlice";
 import axios from "axios";
@@ -8,7 +8,6 @@ import "./news.css";
 const NewsLoaded = () => {
   const dispatch = useDispatch();
   const { news } = useSelector((state) => state.news);
-  const { isLogged } = useSelector((state) => state.logged);
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -20,7 +19,6 @@ const NewsLoaded = () => {
         const userFetchedResponse = await axios.get(
           "http://localhost:5000/api/news/fetchnews"
         );
-        console.log(userFetchedResponse.data.news);
 
         const allNews = [
           ...userFetchedResponse.data.news,
@@ -37,24 +35,46 @@ const NewsLoaded = () => {
   }, [dispatch]);
 
   return (
-    <div>
-      {news ? (
+    <div className="container mx-auto grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-4 py-6">
+      {news && news.length > 0 ? (
         news.map((item, idx) => (
-          <div key={idx} className="aa">
-            <Link to={`/news/${item._id}`}>
-              <h3 className="news-heading-load">{item.title}</h3>
-            </Link>
-            <p className="news-desc-load">{item.content}</p>
-            <p className="news-desc-load truncate ">{item.description}</p>
-            <p className="news-date-load">
-              {item.publishedAt
-                ? new Date(item.publishedAt).toLocaleString()
-                : new Date(item.createdAt).toLocaleString()}
-            </p>
+          <div
+            key={idx}
+            className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden flex flex-col"
+          >
+            {(item.urlToImage || item.image) && (
+              <img
+                src={item.urlToImage || item.image}
+                alt={item.title}
+                className="w-full h-48 object-cover"
+                loading="lazy"
+              />
+            )}
+            <div className="p-4 flex flex-col flex-grow">
+              <Link to={`/news/${item._id}`} className="hover:underline">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white line-clamp-2 mb-2">
+                  {item.title}
+                </h3>
+              </Link>
+              <p className="text-gray-700 dark:text-gray-300 text-sm flex-grow line-clamp-3 mb-3">
+                {item.description ||
+                  item.content ||
+                  "No description available."}
+              </p>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto">
+                {item.publishedAt
+                  ? new Date(item.publishedAt).toLocaleString()
+                  : item.createdAt
+                  ? new Date(item.createdAt).toLocaleString()
+                  : "No date"}
+              </p>
+            </div>
           </div>
         ))
       ) : (
-        <p>Loading...</p>
+        <p className="text-center text-gray-500 dark:text-gray-400 col-span-full">
+          Loading...
+        </p>
       )}
     </div>
   );

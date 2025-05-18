@@ -1,12 +1,12 @@
 import React from "react";
-import SignUpSection from "./SignUpSection";
+import LoginSection from "../components/Login/LoginSection";
 
-const Signup = () => {
+const Login = () => {
   return (
     <div className="text-white h-screen w-screen flex justify-center items-center">
-      <SignUpSection />
+      <LoginSection />
     </div>
   );
 };
 
-export default Signup;
+export default Login;
