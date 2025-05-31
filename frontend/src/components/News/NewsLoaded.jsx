@@ -25,6 +25,12 @@ const NewsLoaded = () => {
           ...fetchedResponse.data.articles,
         ];
 
+        allNews.sort((a, b) => {
+          const dateA = new Date(a.publishedAt || a.createdAt);
+          const dateB = new Date(b.publishedAt || b.createdAt);
+          return dateB - dateA;
+        });
+
         dispatch(newsLoaded(allNews));
       } catch (err) {
         dispatch(newsError("Failed to load news", err));

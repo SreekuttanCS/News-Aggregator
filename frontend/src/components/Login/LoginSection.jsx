@@ -29,7 +29,6 @@ const LoginSection = () => {
     });
 
     navigate(isAdmin ? "/admin" : "/");
-    if (isAdmin) console.log("Admin logged in: ", token);
   };
 
   const handleLogin = async (e) => {
@@ -46,17 +45,23 @@ const LoginSection = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/user/login", {
-        email: enteredEmail,
-        password: enteredPassword,
-      });
+      const response = await axios.post(
+        "http://localhost:5000/api/user/login",
+        {
+          email: enteredEmail,
+          password: enteredPassword,
+        }
+      );
       handleSuccessfulLogin(response.data.token);
     } catch (userError) {
       try {
-        const adminResponse = await axios.post("http://localhost:5000/api/admin/login", {
-          email: enteredEmail,
-          password: enteredPassword,
-        });
+        const adminResponse = await axios.post(
+          "http://localhost:5000/api/admin/login",
+          {
+            email: enteredEmail,
+            password: enteredPassword,
+          }
+        );
         handleSuccessfulLogin(adminResponse.data.token, true);
       } catch (err) {
         toast.error("Login failed. Please check your credentials.", {
@@ -65,7 +70,10 @@ const LoginSection = () => {
           theme: "dark",
           transition: Bounce,
         });
-        console.error("Login error:", err.response?.data?.message || err.message);
+        console.error(
+          "Login error:",
+          err.response?.data?.message || err.message
+        );
       }
     }
   };
@@ -75,12 +83,17 @@ const LoginSection = () => {
   return (
     <div className="flex items-center justify-center min-h-screen  p-4">
       <div className="relative bg-gray-800 rounded-2xl shadow-lg w-full max-w-md px-6 py-10 text-white space-y-6">
-        <button onClick={handleHome} className="absolute top-4 left-4 text-gray-400 hover:text-white">
+        <button
+          onClick={handleHome}
+          className="absolute top-4 left-4 text-gray-400 hover:text-white"
+        >
           <Close />
         </button>
 
         <div className="text-center">
-          <h1 className="text-3xl font-bold font-[Montserrat] italic mb-2">NewsGrid</h1>
+          <h1 className="text-3xl font-bold font-[Montserrat] italic mb-2">
+            NewsGrid
+          </h1>
           <p className="text-sm text-gray-300">
             Log in to unlock exclusive content and enjoy a premium experience.
           </p>

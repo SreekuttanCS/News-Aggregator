@@ -37,7 +37,7 @@ export const createNews = async (req, res) => {
       content,
       category,
       author: req.user._id,
-      imageUrl,
+      image: imageUrl,
     });
 
     res.status(200).json({ message: "Successfully created news", news });
@@ -54,6 +54,7 @@ export const getUserNews = async (req, res) => {
     }
     res.status(200).json({ news });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: "Failed to fetch news", err });
   }
 };

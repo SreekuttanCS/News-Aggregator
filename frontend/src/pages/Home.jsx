@@ -1,31 +1,30 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import Navbar from "../components/Navbar/Navbar";
 import Category from "../components/Category/Category";
-import News from "./News";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import CreateNews from "./CreateNews";
-import { useSelector } from "react-redux";
-import MarqueeSection from "../components/Marquee/MarqueeSection";
-import Footer from "../components/Footer/Footer";
-import IndividualNews from "../components/News/IndividualNews";
+
+const News = lazy(() => import("./News"));
+const MarqueeSection = lazy(() =>
+  import("../components/Marquee/MarqueeSection")
+);
+const Footer = lazy(() => import("../components/Footer/Footer"));
 
 const Home = () => {
-  const { isPost } = useSelector((state) => state.logged);
-
   return (
     <>
       <Navbar />
       <Category />
-      <MarqueeSection />
-      <Routes>
-        {isPost ? (
-          <Route path="/news/create" element={<CreateNews />} />
-        ) : (
-          <Route path="/" element={<News />} />
-        )}
-        <Route path="/news/:id" element={<IndividualNews />} />
-      </Routes>
-      <Footer />
+
+      <Suspense fallback={<div>Loading marquee...</div>}>
+        <MarqueeSection />
+      </Suspense>
+
+      <Suspense fallback={<div>Loading news...</div>}>
+        <News />
+      </Suspense>
+
+      <Suspense fallback={<div>Loading footer...</div>}>
+        <Footer />
+      </Suspense>
     </>
   );
 };

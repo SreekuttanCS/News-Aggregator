@@ -59,8 +59,6 @@ const Creation = () => {
         },
       });
 
-      setFormData({ title: "", content: "", category: "", image: null });
-
       toast.success("News Created Successfully!", {
         position: "top-left",
         autoClose: 3000,
@@ -72,6 +70,7 @@ const Creation = () => {
         theme: "dark",
         transition: Bounce,
       });
+      setFormData({ title: "", content: "", category: "", image: null });
     } catch (error) {
       toast.error("Failed to Create News", {
         position: "top-left",

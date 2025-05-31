@@ -13,7 +13,6 @@ This project follows modern web development practices, including RESTful API des
 - ✅ Search for news articles by title/content
 - ✅ CRUD Operations – Save, update, and delete articles
 - ✅ User authentication (Optional - JWT-based login/signup)
-- ✅ Dark mode UI for better user experience
 - ✅ Fully responsive design (mobile & desktop friendly)
 - ✅ Scalable backend hosted on Render/Railway
 

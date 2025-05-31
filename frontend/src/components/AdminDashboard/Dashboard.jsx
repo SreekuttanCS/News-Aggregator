@@ -1,64 +1,78 @@
 import React, { useEffect, useState } from "react";
-import "./dashboard.css";
+import UserIcon from "@mui/icons-material/Group";
+import NewsIcon from "@mui/icons-material/Article";
+import StatCard from "./StatCard";
+import RecentUsers from "./RecentUsers";
+import RecentNews from "./RecentNews";
 
 const Dashboard = () => {
   const [datas, setDatas] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchDashboard = async () => {
       const token = localStorage.getItem("token");
-      console.log("Token:", token);
-
       try {
         const response = await fetch(
           "http://localhost:5000/api/admin/dashboard",
           {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            headers: { Authorization: `Bearer ${token}` },
           }
         );
+        if (!response.ok) throw new Error("Failed to fetch");
         const data = await response.json();
-        console.log(data);
         setDatas(data);
-      } catch (err) {
-        console.error("Error fetching dashboard data:", err);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
-
     fetchDashboard();
   }, []);
 
+  if (loading)
+    return (
+      <div className="flex justify-center items-center h-screen text-gray-400 text-lg font-medium">
+        Loading Dashboard...
+      </div>
+    );
+
+  if (!datas)
+    return (
+      <div className="flex justify-center items-center h-screen text-red-500 font-semibold">
+        Failed to load data.
+      </div>
+    );
+
   return (
-    <div className="dashboard flex flex-wrap justify-center item-center">
-      <div className="dashboard-box">
-        <span className="dashboard-heading">Total User</span>
-        <span className="dashboard-value block">
-          {datas?.totalUser ?? "Loading..."}
-        </span>
-      </div>
-      <div className="dashboard-box">
-        <span className="dashboard-heading">Total User Upload News</span>
-        <span className="dashboard-value block">
-          {datas?.totalNews ?? "Loading..."}
-        </span>
-      </div>
-      <div className="dashboard-box">
-        <span className="dashboard-heading"> Recent 5 Users</span>
+    <div
+      className="min-h-screen p-8 font-sans text-gray-200 max-w-5xl mx-auto"
+      style={{ backgroundColor: "#292A2D" }}
+    >
+      <h1 className="text-3xl font-semibold mb-8 text-gray-100">
+        Admin Dashboard
+      </h1>
 
-        {datas?.recentUser.map((data) => (
-          <span className="dashboard-value block">{data.name}</span>
-        )) ?? "Loading..."}
-      </div>
-      <div className="dashboard-box">
-        <span className="dashboard-heading"> Recent 5 News</span>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
+        <StatCard
+          icon={<UserIcon style={{ fontSize: 32, color: "#3b82f6" }} />}
+          label="Total Users"
+          value={datas.totalUser ?? 0}
+          bgColor="#101828"
+        />
 
-        {datas?.recentNews.map((data) => (
-          <span className="dashboard-value block text-center">
-            {data.title}
-          </span>
-        )) ?? "Loading..."}
+        <StatCard
+          icon={<NewsIcon style={{ fontSize: 32, color: "#10b981" }} />}
+          label="News Uploads"
+          value={datas.totalNews ?? 0}
+          bgColor="#101828"
+        />
       </div>
+
+      <RecentUsers users={datas.recentUser} bgColor="#101828" />
+
+      <RecentNews news={datas.recentNews} bgColor="#101828" />
     </div>
   );
 };

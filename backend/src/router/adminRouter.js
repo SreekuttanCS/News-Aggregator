@@ -15,14 +15,14 @@ import protect from "../middleware/authMiddleware.js";
 const router = express.Router();
 
 router.get("/dashboard", protect, isAdmin, adminDashboard);
-router.post("/signin", protect, isAdmin, adminCreate);
+router.post("/signin", adminCreate);
 router.post("/login", loginAdmin);
 
 router.get("/users", protect, isAdmin, getAllUser);
 router.get("/users/:id", protect, isAdmin, getUserById);
 router.delete("/users/:id", protect, isAdmin, deleteUser);
 
-router.get("/news", protect, isAdmin, getAllNews);
+router.get("/news", protect,  isAdmin, getAllNews);
 router.delete("/news/:id", protect, isAdmin, deleteNewsById);
 
 export default router;

@@ -63,6 +63,7 @@ export const getUserById = async (req, res) => {
     }
     res.status(200).json({ user });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: "Failed to fetch user", err });
   }
 };
