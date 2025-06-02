@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import UserIcon from "@mui/icons-material/Group";
 import NewsIcon from "@mui/icons-material/Article";
 import StatCard from "./StatCard";
 import RecentUsers from "./RecentUsers";
 import RecentNews from "./RecentNews";
+import { endpoints } from "../../api/apiConfig";
 
 const Dashboard = () => {
   const [datas, setDatas] = useState(null);
@@ -13,15 +15,10 @@ const Dashboard = () => {
     const fetchDashboard = async () => {
       const token = localStorage.getItem("token");
       try {
-        const response = await fetch(
-          "http://localhost:5000/api/admin/dashboard",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-        if (!response.ok) throw new Error("Failed to fetch");
-        const data = await response.json();
-        setDatas(data);
+        const response = await axios.get(endpoints.adminDashboardFetch, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setDatas(response.data);
       } catch (error) {
         console.error(error);
       } finally {

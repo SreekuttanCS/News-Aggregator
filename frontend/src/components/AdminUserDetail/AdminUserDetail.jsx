@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { endpoints } from "../../api/apiConfig";
 
 const AdminUserDetail = () => {
   const [users, setUsers] = useState([]);
@@ -10,14 +11,11 @@ const AdminUserDetail = () => {
     const fetchUser = async () => {
       const token = localStorage.getItem("token");
       try {
-        const response = await axios.get(
-          "http://localhost:5000/api/admin/users",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get(endpoints.adminUserDetail, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setUsers(response.data.user);
       } catch (err) {
         console.error("Error fetching dashboard data:", err);

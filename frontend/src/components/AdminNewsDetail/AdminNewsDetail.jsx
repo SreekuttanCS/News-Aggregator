@@ -7,6 +7,7 @@ import "./newsDetail.css";
 import { deleteNews } from "./deleteNews";
 import { newsError, newsLoaded, newsLoading } from "../../redux/NewsSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { endpoints } from "../../api/apiConfig";
 
 const AdminNewsDetail = () => {
   const dispatch = useDispatch();
@@ -17,14 +18,11 @@ const AdminNewsDetail = () => {
     const fetchNews = async () => {
       dispatch(newsLoading());
       try {
-        const response = await axios.get(
-          "http://localhost:5000/api/admin/news",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get(endpoints.adminNewsDetail, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         dispatch(newsLoaded(response.data.news || response.data));
       } catch (err) {
         dispatch(newsError("Error fetching dashboard data:", err));

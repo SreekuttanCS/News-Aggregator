@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { endpoints } from "../../api/apiConfig";
 
 const IndividualUser = () => {
   const { id } = useParams();
@@ -16,14 +17,11 @@ const IndividualUser = () => {
       const token = localStorage.getItem("token");
 
       try {
-        const res = await axios.get(
-          `http://localhost:5000/api/admin/users/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const res = await axios.get(endpoints.getUserById(id), {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setUser(res.data.user);
       } catch (err) {
         setError(err.response?.data?.message || err.message);
@@ -44,7 +42,7 @@ const IndividualUser = () => {
     const token = localStorage.getItem("token");
 
     try {
-      await axios.delete(`http://localhost:5000/api/admin/users/${userId}`, {
+      await axios.delete(endpoints.deleteUserById(userId), {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { isSignin } from "../../redux/LoggedSlice";
 import { Bounce, toast } from "react-toastify";
 import CloseIcon from "@mui/icons-material/Close";
+import { endpoints } from "../../api/apiConfig";
 
 const SignUpSection = () => {
   const navigate = useNavigate();
@@ -18,14 +19,11 @@ const SignUpSection = () => {
     e.preventDefault();
     if (enteredName && enteredEmail && enteredPassword) {
       try {
-        const response = await axios.post(
-          "http://localhost:5000/api/user/signup",
-          {
-            name: enteredName,
-            email: enteredEmail,
-            password: enteredPassword,
-          }
-        );
+        await axios.post(endpoints.userSignup, {
+          name: enteredName,
+          email: enteredEmail,
+          password: enteredPassword,
+        });
         dispatch(isSignin(true));
         toast.success(`Welcome ${enteredName}!`, {
           position: "top-left",

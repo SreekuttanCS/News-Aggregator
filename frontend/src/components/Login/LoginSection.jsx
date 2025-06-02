@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../../redux/LoggedSlice";
 import { Bounce, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { endpoints } from "../../api/apiConfig";
 
 const LoginSection = () => {
   const navigate = useNavigate();
@@ -45,23 +46,17 @@ const LoginSection = () => {
     }
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/user/login",
-        {
+      const response = await axios.post(endpoints.userLogin, {
+        email: enteredEmail,
+        password: enteredPassword,
+      });
+      handleSuccessfulLogin(response.data.token);
+    } catch {
+      try {
+        const adminResponse = await axios.post(endpoints.adminLogin, {
           email: enteredEmail,
           password: enteredPassword,
-        }
-      );
-      handleSuccessfulLogin(response.data.token);
-    } catch (userError) {
-      try {
-        const adminResponse = await axios.post(
-          "http://localhost:5000/api/admin/login",
-          {
-            email: enteredEmail,
-            password: enteredPassword,
-          }
-        );
+        });
         handleSuccessfulLogin(adminResponse.data.token, true);
       } catch (err) {
         toast.error("Login failed. Please check your credentials.", {

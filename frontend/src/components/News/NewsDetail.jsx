@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+import { endpoints } from "../../api/apiConfig";
 
 const NewsDetail = ({ userCreatedNews }) => {
   const { id } = useParams();
@@ -15,9 +16,8 @@ const NewsDetail = ({ userCreatedNews }) => {
         if (userNews) {
           setNewsItem(userNews);
         } else {
-          const response = await axios.get(
-            `http://localhost:5000/api/news/${id}`
-          );
+          const response = await axios.get(endpoints.getNewsById(id));
+
           setNewsItem(response.data);
         }
       } catch (err) {

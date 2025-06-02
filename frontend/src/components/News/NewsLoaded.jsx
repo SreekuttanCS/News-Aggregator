@@ -4,6 +4,7 @@ import { newsError, newsLoaded, newsLoading } from "../../redux/NewsSlice";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "./news.css";
+import { endpoints } from "../../api/apiConfig";
 
 const NewsLoaded = () => {
   const dispatch = useDispatch();
@@ -13,11 +14,9 @@ const NewsLoaded = () => {
     const fetchNews = async () => {
       dispatch(newsLoading());
       try {
-        const fetchedResponse = await axios.get(
-          "http://localhost:5000/api/news/fetchednews"
-        );
+        const fetchedResponse = await axios.get(endpoints.loadFetchedResponse);
         const userFetchedResponse = await axios.get(
-          "http://localhost:5000/api/news/fetchnews"
+          endpoints.loadUserFetchedResponse
         );
 
         const allNews = [
