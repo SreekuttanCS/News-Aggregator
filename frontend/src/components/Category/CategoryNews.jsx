@@ -4,6 +4,7 @@ import { newsError, newsLoaded, newsLoading } from "../../redux/NewsSlice";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "../News/news.css";
+import { endpoints } from "../../api/apiConfig";
 
 const CategoryNews = () => {
   const dispatch = useDispatch();
@@ -15,10 +16,10 @@ const CategoryNews = () => {
       dispatch(newsLoading());
       try {
         const fetchedResponse = await axios.get(
-          `http://localhost:5000/api/news/category/${category}`
+          endpoints.newsByCategory(category)
         );
         const userFetchedResponse = await axios.get(
-          `http://localhost:5000/api/news/category_user/${category}`
+          endpoints.userNewsByCategory(category)
         );
 
         const userNews = Array.isArray(userFetchedResponse.data)

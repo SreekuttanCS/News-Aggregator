@@ -5,6 +5,7 @@ import axios from "axios";
 import { addSearchNews } from "../../redux/SearchSlice";
 import { Link } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
+import { endpoints } from "../../api/apiConfig";
 
 const SearchNews = () => {
   const dispatch = useDispatch();
@@ -16,10 +17,10 @@ const SearchNews = () => {
       if (searchTerm) {
         try {
           const fetchedResponse = await axios.get(
-            `http://localhost:5000/api/news/search/external?q=${searchTerm}`
+            endpoints.searchExternalNews(searchTerm)
           );
           const userFetchedResponse = await axios.get(
-            `http://localhost:5000/api/news/search/user?q=${searchTerm}`
+            endpoints.searchUserNews(searchTerm)
           );
 
           const allNews = [
@@ -51,7 +52,6 @@ const SearchNews = () => {
         });
       }
     };
-
     fetchNews();
   }, [searchTerm, dispatch]);
 

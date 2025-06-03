@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { isPost } from "../../redux/LoggedSlice";
 import { useNavigate } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
+import { endpoints } from "../../api/apiConfig";
 
 const Creation = () => {
   const dispatch = useDispatch();
@@ -52,7 +53,7 @@ const Creation = () => {
     data.append("image", formData.image);
 
     try {
-      await axios.post("http://localhost:5000/api/news/create", data, {
+      await axios.post(endpoints.createNews, data, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,

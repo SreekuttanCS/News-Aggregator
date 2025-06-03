@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import Seo from "../Seo/Seo";
+import { API_BASE_URL } from "../../api/apiConfig";
 
 const IndividualNews = () => {
   const { id } = useParams();
@@ -25,12 +26,11 @@ const IndividualNews = () => {
       day: "numeric",
     }
   );
-
   const imageUrl =
     individualNews.image?.startsWith("http") ||
     individualNews.urlToImage?.startsWith("http")
       ? individualNews.image || individualNews.urlToImage
-      : `http://localhost:5000/${individualNews.image}`;
+      : `${API_BASE_URL.replace("/api", "")}/${individualNews.image}`;
 
   const seoTitle = individualNews.title;
   const seoDescription =

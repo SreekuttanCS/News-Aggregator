@@ -1,39 +1,37 @@
-Realtime News Aggregator – Full-Stack Web Application
+News Aggregator – Full-Stack Web Application
 
 ## 📌 Project Overview
 
-This is a full-stack web application that fetches real-time news from external sources using News APIs (e.g., NewsAPI, NY Times API). Users can filter news by category, search articles, and save their favorite articles for later reading. The backend is developed with Node.js, Express.js, and MongoDB, while the frontend (to be developed) will use React.js.
+This is a full-stack web application that fetches news from external sources using News APIs (NewsAPI). Users can filter news by category, search articles, and save their favorite articles for later reading. The backend is developed with Node.js, Express.js, and MongoDB, while the frontend (to be developed) will use React.js.
 
 This project follows modern web development practices, including RESTful API design, MongoDB CRUD operations, and secure authentication (JWT-based).
 
 ## 📌 Features
 
-- ✅ Fetch live news articles from external APIs in real-time
+- ✅ Fetch live news articles from external APIs
 - ✅ Filter news by category (Tech, Sports, Business, etc.)
 - ✅ Search for news articles by title/content
-- ✅ CRUD Operations – Save, update, and delete articles
-- ✅ User authentication (Optional - JWT-based login/signup)
-- ✅ Fully responsive design (mobile & desktop friendly)
-- ✅ Scalable backend hosted on Render/Railway
+- ✅ User authentication (JWT-based login/signup)
+- ✅ Fully responsive design
 
 ## 📌 Technologies Used
 
 ### Stack
 
-| **Category**        | **Technology**                                      |
-| ------------------- | --------------------------------------------------- |
-| **Backend**         | Node.js, Express.js                                 |
-| **Database**        | MongoDB (Atlas)                                     |
-| **Frontend**        | React.js, Tailwind CSS                              |
-| **API Integration** | NewsAPI, NY Times API                               |
-| **Authentication**  | JWT, bcrypt.js                                      |
-| **Deployment**      | Render/Railway (Backend), Vercel/Netlify (Frontend) |
+| **Category**        | **Technology**                      |
+| ------------------- | ----------------------------------- |
+| **Backend**         | Node.js, Express.js                 |
+| **Database**        | MongoDB (Atlas)                     |
+| **Frontend**        | React.js, Tailwind CSS              |
+| **API Integration** | NewsAPI                             |
+| **Authentication**  | JWT, bcrypt.js                      |
+| **Deployment**      | Render (Backend), Vercel (Frontend) |
 
 ## 📌 Installation & Setup
 
 Clone the Repository
 
-git clone https://github.com/SreekuttanCS/Realtime-News-Aggregator.git
+git clone https://github.com/SreekuttanCS/News-Aggregator.git
 cd realtime-news-aggregator
 
 Install Dependencies
@@ -48,17 +46,16 @@ Start the Backend Server
 npm run dev
 ```
 
-Backend Deployment
-
-```bash
-git push origin main
-```
-
 Frontend Deployment
 
-(Will be added after frontend development)
+Install Dependencies
 
-## 📌 Contributors
+```bash
+npm install
+```
 
-👤 Your Name
-👤 Collaborator
+Start the Frontend
+
+```bash
+npm run dev
+```

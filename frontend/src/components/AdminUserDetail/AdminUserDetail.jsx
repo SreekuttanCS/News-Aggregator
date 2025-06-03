@@ -33,11 +33,11 @@ const AdminUserDetail = () => {
     if (window.confirm("Are you sure you want to delete this user?")) {
       const token = localStorage.getItem("token");
       try {
-        await axios.delete(`http://localhost:5000/api/admin/users/${userId}`, {
+        await axios.delete(endpoints.deleteUserById(userId), {
           headers: { Authorization: `Bearer ${token}` },
         });
         alert("User deleted successfully.");
-        navigate("/admin");
+        setUsers((prev) => prev.filter((user) => user._id !== userId));
       } catch (err) {
         alert(
           err.response?.data?.message ||

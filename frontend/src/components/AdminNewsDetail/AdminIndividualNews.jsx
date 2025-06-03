@@ -6,6 +6,7 @@ import axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const AdminIndividualNews = () => {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -36,11 +37,12 @@ const AdminIndividualNews = () => {
       day: "numeric",
     }
   );
+
   const imageUrl =
     individualNews.image?.startsWith("http") ||
     individualNews.urlToImage?.startsWith("http")
       ? individualNews.image || individualNews.urlToImage
-      : `http://localhost:5000/${individualNews.image}`;
+      : `${API_BASE_URL.replace(/\/api$/, "")}/${individualNews.image}`;
 
   return (
     <div className="max-w-4xl mx-auto p-6 sm:p-10">
