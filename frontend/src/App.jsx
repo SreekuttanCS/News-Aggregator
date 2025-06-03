@@ -19,8 +19,6 @@ import AdminIndividualNews from "./components/AdminNewsDetail/AdminIndividualNew
 import IndividualUser from "./components/AdminUserDetail/IndividualUser";
 
 const App = () => {
-  const { isPost } = useSelector((state) => state.logged);
-
   return (
     <Router>
       <Routes>
@@ -28,10 +26,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
-        <Route
-          path="/news/create"
-          element={isPost ? <CreateNews /> : <Navigate to="/" />}
-        />
+        <Route path="/news/create" element={<CreateNews />} />
 
         <Route path="/category/:category" element={<CategoryNews />} />
         <Route path="/search" element={<SearchNews />} />

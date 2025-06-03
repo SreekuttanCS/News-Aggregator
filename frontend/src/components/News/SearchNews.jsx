@@ -30,6 +30,12 @@ const SearchNews = () => {
           dispatch(addSearchNews(allNews));
         } catch (err) {
           dispatch(newsError("Failed to load news: " + err.message));
+          toast.error("Failed to load news. Please try again later.", {
+            position: "top-left",
+            autoClose: 3000,
+            theme: "dark",
+            transition: Bounce,
+          });
         }
       } else {
         toast.warn("Enter Search Term", {
@@ -47,7 +53,7 @@ const SearchNews = () => {
     };
 
     fetchNews();
-  }, [searchTerm]);
+  }, [searchTerm, dispatch]);
 
   return (
     <div className="container mx-auto grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-4 py-6">

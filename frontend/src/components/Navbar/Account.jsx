@@ -54,7 +54,7 @@ const Account = ({ fontSize = "large", ariaLabel = "Manage Account" }) => {
   const handleCreatePage = useCallback(() => {
     dispatch(isPost(true));
     handleClose();
-    navigate("/create");
+    navigate("/news/create");
   }, [dispatch, navigate, handleClose]);
 
   return (

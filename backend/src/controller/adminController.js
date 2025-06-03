@@ -115,7 +115,6 @@ export const adminDashboard = async (req, res) => {
       recentNews,
       recentUser,
     });
-    console.log(recentUser);
   } catch (err) {
     console.error("Error fetching dashboard data:", err);
     res.status(500).json({ message: "Failed to fetch dashboard data" });

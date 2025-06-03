@@ -42,7 +42,6 @@ export const createNews = async (req, res) => {
 
     res.status(200).json({ message: "Successfully created news", news });
   } catch (err) {
-    console.error("Cloudinary Upload Error:", err);
     res.status(400).json({ message: "Failed to create news", err });
   }
 };

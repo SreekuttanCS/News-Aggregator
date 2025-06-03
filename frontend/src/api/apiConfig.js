@@ -7,7 +7,7 @@ export const endpoints = {
   adminLogin: `${API_BASE_URL}/admin/login`,
   userSignup: `${API_BASE_URL}/user/signup`,
   adminNewsDetail: `${API_BASE_URL}/admin/news`,
-  adminUserDetail: `${API_BASE_URL}/admin/user`,
+  adminUserDetail: `${API_BASE_URL}/admin/users`,
   getUserById: (id) => `${API_BASE_URL}/admin/users/${id}`,
   deleteUserById: (id) => `${API_BASE_URL}/admin/users/${id}`,
   getNewsById: (id) => `${API_BASE_URL}/news/${id}`,
