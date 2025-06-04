@@ -21,14 +21,15 @@ const InputBox = () => {
   };
 
   return (
-    <div className="flex items-center bg-gray-100 px-3 py-2 rounded-lg shadow-sm w-full md:w-96">
+    <div className="flex items-center bg-gray-100 px-3 py-2 rounded-lg shadow-sm w-full">
       <input
         type="text"
         placeholder="Search news..."
-        className="flex-grow bg-transparent outline-none text-black placeholder-gray-500"
+        className="flex-grow bg-transparent outline-none text-black placeholder-gray-500 min-w-0"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
+
       <button onClick={isSearch ? handleClear : handleSearch}>
         {isSearch ? (
           <CloseIcon className="text-red-500" />
