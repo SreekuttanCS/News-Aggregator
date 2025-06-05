@@ -1,3 +1,5 @@
+// src/components/News/IndividualNews.jsx
+
 import React from "react";
 import { useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
@@ -8,7 +10,13 @@ const IndividualNews = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { news } = useSelector((state) => state.news);
-  const individualNews = news.find((item) => item._id === id);
+
+  // Decode id to match articles using url if needed
+  const decodedId = decodeURIComponent(id);
+
+  const individualNews = news.find((item) => {
+    return item._id === decodedId || item.url === decodedId;
+  });
 
   if (!individualNews) {
     return (
@@ -18,14 +26,14 @@ const IndividualNews = () => {
     );
   }
 
-  const formattedDate = new Date(individualNews.createdAt).toLocaleDateString(
-    "en-US",
-    {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }
-  );
+  const formattedDate = new Date(
+    individualNews.publishedAt || individualNews.createdAt
+  ).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
   const imageUrl =
     individualNews.image?.startsWith("http") ||
     individualNews.urlToImage?.startsWith("http")
@@ -56,7 +64,7 @@ const IndividualNews = () => {
 
         <div className="flex flex-wrap gap-4 text-gray-500 mb-6">
           <p>
-            <strong>Category:</strong> {individualNews.category}
+            <strong>Category:</strong> {individualNews.category || "General"}
           </p>
           <p>
             <strong>Date:</strong> {formattedDate}
